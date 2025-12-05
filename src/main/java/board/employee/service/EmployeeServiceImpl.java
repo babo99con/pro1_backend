@@ -1,6 +1,7 @@
 package board.employee.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,30 @@ import board.employee.mapper.EmployeeMapper;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    private static final Map<String, String> SEARCHABLE_CONDITIONS = Map.of(
+            "name", "name",
+            "employeeId", "employee_id",
+            "department", "department"
+    );
+
     @Autowired
     private EmployeeMapper employeeMapper;
 
     @Override
     public List<EmployeeDto> getEmployees() {
         return employeeMapper.findAll();
+    }
+
+    @Override
+    public List<EmployeeDto> getEmployeesByCondition(String condition, String value) {
+        Assert.hasText(condition, "condition is required.");
+        Assert.hasText(value, "value is required.");
+
+        if (!SEARCHABLE_CONDITIONS.containsKey(condition)) {
+            throw new IllegalArgumentException("Unsupported condition: " + condition);
+        }
+
+        return employeeMapper.findAllByCondition(condition, value);
     }
 
     @Override

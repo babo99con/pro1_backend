@@ -12,6 +12,8 @@ public interface EmployeeMapper {
 
     List<EmployeeDto> findAll();
 
+    List<EmployeeDto> findAllByCondition(@Param("condition") String condition, @Param("value") String value);
+
     EmployeeDto findById(@Param("id") Long id);
 
     EmployeeDto findByEmployeeId(@Param("employeeId") String employeeId);

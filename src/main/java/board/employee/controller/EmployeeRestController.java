@@ -33,6 +33,13 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employee);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<EmployeeDto>> searchByCondition(@RequestParam("condition") String condition,
+                                                               @RequestParam("value") String value) {
+        List<EmployeeDto> list = employeeService.getEmployeesByCondition(condition, value);
+        return ResponseEntity.ok(list);
+    }
+
     @PostMapping
     public ResponseEntity<EmployeeDto> create(@RequestBody EmployeeDto employee, UriComponentsBuilder uriBuilder) {
         EmployeeDto created = employeeService.createEmployee(employee);

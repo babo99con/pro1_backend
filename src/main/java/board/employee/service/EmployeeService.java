@@ -8,6 +8,8 @@ public interface EmployeeService {
 
     List<EmployeeDto> getEmployees();
 
+    List<EmployeeDto> getEmployeesByCondition(String condition, String value);
+
     EmployeeDto getEmployee(Long id);
 
     EmployeeDto createEmployee(EmployeeDto employee);

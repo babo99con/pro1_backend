@@ -29,6 +29,34 @@
         ORDER BY id DESC
     </select>
 
+    <select id="findAllByCondition" parameterType="Map" resultMap="EmployeeResultMap">
+        SELECT *
+        FROM employee
+
+        WHERE deleted_yn = 'N'
+
+        <choose>
+            <when test="condition == 'name'">
+                AND name LIKE CONCAT('%', #{value}, '%')
+            </when>
+
+            <when test="condition == 'employeeId'">
+                AND employee_id LIKE CONCAT('%', #{value}, '%')
+            </when>
+
+            <when test="condition == 'department'">
+                AND department LIKE CONCAT('%', #{value}, '%')
+            </when>
+
+            <otherwise>
+                AND 1 = 0
+            </otherwise>
+        </choose>
+
+        ORDER BY id DESC
+    </select>
+
+
     <select id="findById" parameterType="long" resultMap="EmployeeResultMap">
         SELECT *
         FROM employee
