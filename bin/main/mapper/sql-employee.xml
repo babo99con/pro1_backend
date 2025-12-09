@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board.employee.mapper.EmployeeMapper">
+
+    <sql id="selectAllFromEmployee">
+        select * from employee where deleted_yn = 'N'
+    </sql>
+
+    <resultMap id="EmployeeResultMap" type="board.employee.dto.EmployeeDto">
+        <id property="id" column="id"/>
+        <result property="employeeId" column="employee_id"/>
+        <result property="name" column="name"/>
+        <result property="emailLocal" column="email_local"/>
+        <result property="emailDomain" column="email_domain"/>
+        <result property="department" column="department"/>
+        <result property="gender" column="gender"/>
+        <result property="birthDate" column="birth_date"/>
+        <result property="phonePrefix" column="phone_prefix"/>
+        <result property="phoneMiddle" column="phone_middle"/>
+        <result property="phoneLast" column="phone_last"/>
+        <result property="zipCode" column="zip_code"/>
+        <result property="address1" column="address1"/>
+        <result property="address2" column="address2"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="EmployeeResultMap">
+        <include refid="selectAllFromEmployee"/>
+
+        ORDER BY id DESC
+    </select>
+
+    <select id="findAllByCondition" parameterType="Map" resultMap="EmployeeResultMap">
+        <include refid="selectAllFromEmployee"/>
+
+        <choose>
+            <when test="condition == 'name'">
+                AND name LIKE CONCAT('%', #{value}, '%')
+            </when>
+
+            <when test="condition == 'employeeId'">
+                AND employee_id LIKE CONCAT('%', #{value}, '%')
+            </when>
+
+            <when test="condition == 'department'">
+                AND department LIKE CONCAT('%', #{value}, '%')
+            </when>
+
+            <otherwise>
+                AND 1 = 0
+            </otherwise>
+        </choose>
+
+        ORDER BY id DESC
+    </select>
+
+
+    <select id="findById" parameterType="long" resultMap="EmployeeResultMap">
+        <include refid="selectAllFromEmployee"/>
+
+          AND id = #{id}
+    </select>
+
+    <select id="findByEmployeeId" parameterType="string" resultMap="EmployeeResultMap">
+        <include refid="selectAllFromEmployee"/>
+
+          AND employee_id = #{employeeId}
+    </select>
+
+    <insert id="insert" parameterType="board.employee.dto.EmployeeDto" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employee
+        (
+            employee_id,
+            name,
+            email_local,
+            email_domain,
+            department,
+            gender,
+            birth_date,
+            phone_prefix,
+            phone_middle,
+            phone_last,
+            zip_code,
+            address1,
+            address2,
+            created_at,
+            updated_at,
+            deleted_yn
+        )
+        VALUES
+        (
+            #{employeeId},
+            #{name},
+            #{emailLocal},
+            #{emailDomain},
+            #{department},
+            #{gender},
+            #{birthDate},
+            #{phonePrefix},
+            #{phoneMiddle},
+            #{phoneLast},
+            #{zipCode},
+            #{address1},
+            #{address2},
+            NOW(),
+            NOW(),
+            'N'
+        )
+    </insert>
+
+    <update id="update" parameterType="board.employee.dto.EmployeeDto">
+        UPDATE employee
+        SET
+            employee_id = #{employeeId},
+            name = #{name},
+            email_local = #{emailLocal},
+            email_domain = #{emailDomain},
+            department = #{department},
+            gender = #{gender},
+            birth_date = #{birthDate},
+            phone_prefix = #{phonePrefix},
+            phone_middle = #{phoneMiddle},
+            phone_last = #{phoneLast},
+            zip_code = #{zipCode},
+            address1 = #{address1},
+            address2 = #{address2},
+            updated_at = NOW()
+        WHERE id = #{id}
+          AND deleted_yn = 'N'
+    </update>
+
+    <update id="delete" parameterType="long">
+        UPDATE employee
+        SET deleted_yn = 'Y',
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+</mapper>
