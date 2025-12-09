@@ -3,6 +3,10 @@
 
 <mapper namespace="board.employee.mapper.EmployeeMapper">
 
+    <sql id="selectAllFromEmployee">
+        select * from employee where deleted_yn = 'N'
+    </sql>
+
     <resultMap id="EmployeeResultMap" type="board.employee.dto.EmployeeDto">
         <id property="id" column="id"/>
         <result property="employeeId" column="employee_id"/>
@@ -23,17 +27,13 @@
     </resultMap>
 
     <select id="findAll" resultMap="EmployeeResultMap">
-        SELECT *
-        FROM employee
-        WHERE deleted_yn = 'N'
+        <include refid="selectAllFromEmployee"/>
+
         ORDER BY id DESC
     </select>
 
     <select id="findAllByCondition" parameterType="Map" resultMap="EmployeeResultMap">
-        SELECT *
-        FROM employee
-
-        WHERE deleted_yn = 'N'
+        <include refid="selectAllFromEmployee"/>
 
         <choose>
             <when test="condition == 'name'">
@@ -58,17 +58,15 @@
 
 
     <select id="findById" parameterType="long" resultMap="EmployeeResultMap">
-        SELECT *
-        FROM employee
-        WHERE id = #{id}
-          AND deleted_yn = 'N'
+        <include refid="selectAllFromEmployee"/>
+
+          AND id = #{id}
     </select>
 
     <select id="findByEmployeeId" parameterType="string" resultMap="EmployeeResultMap">
-        SELECT *
-        FROM employee
-        WHERE employee_id = #{employeeId}
-          AND deleted_yn = 'N'
+        <include refid="selectAllFromEmployee"/>
+
+          AND employee_id = #{employeeId}
     </select>
 
     <insert id="insert" parameterType="board.employee.dto.EmployeeDto" useGeneratedKeys="true" keyProperty="id">

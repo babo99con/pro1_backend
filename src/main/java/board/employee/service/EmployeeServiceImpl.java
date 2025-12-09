@@ -1,23 +1,16 @@
 package board.employee.service;
 
 import java.util.List;
-import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import board.employee.dto.EmployeeDto;
 import board.employee.mapper.EmployeeMapper;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-
-    private static final Map<String, String> SEARCHABLE_CONDITIONS = Map.of(
-            "name", "name",
-            "employeeId", "employee_id",
-            "department", "department"
-    );
 
     @Autowired
     private EmployeeMapper employeeMapper;
@@ -28,12 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getEmployeesByCondition(String condition, String value) {
-        Assert.hasText(condition, "condition is required.");
-        Assert.hasText(value, "value is required.");
+    public List<EmployeeDto> getEmployeesByCondition(
+            @Param("condition") String condition,
+            @Param("value") String value) {
 
-        if (!SEARCHABLE_CONDITIONS.containsKey(condition)) {
-            throw new IllegalArgumentException("Unsupported condition: " + condition);
+        if (condition == null || condition.trim().isEmpty()) {
+            throw new IllegalArgumentException("condition is required.");
         }
 
         return employeeMapper.findAllByCondition(condition, value);
@@ -45,34 +38,53 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto createEmployee(EmployeeDto employee) {
-        Assert.notNull(employee.getEmployeeId(), "employeeId is required.");
-        EmployeeDto duplicated = employeeMapper.findByEmployeeId(employee.getEmployeeId());
-        if (duplicated != null) {
+    public EmployeeDto createEmployee(EmployeeDto newEmployee) {
+
+        if (newEmployee.getEmployeeId() == null) {
+            throw new IllegalArgumentException("employeeId is required.");
+        }
+        EmployeeDto existingEmployee  = employeeMapper.findByEmployeeId(newEmployee.getEmployeeId());
+
+        if (existingEmployee  != null) {
             throw new IllegalArgumentException("employeeId already exists.");
         }
-        employeeMapper.insert(employee);
-        return employeeMapper.findById(employee.getId());
+
+        employeeMapper.insert(newEmployee);
+
+        return employeeMapper.findById(newEmployee.getId());
     }
 
     @Override
-    public EmployeeDto updateEmployee(Long id, EmployeeDto employee) {
-        employee.setId(id);
-        if (employee.getEmployeeId() != null) {
-            EmployeeDto duplicated = employeeMapper.findByEmployeeId(employee.getEmployeeId());
-            if (duplicated != null && !duplicated.getId().equals(id)) {
+    public EmployeeDto updateEmployee(Long newId, EmployeeDto newEmployee) {
+
+        newEmployee.setId(newId);
+
+        // employeeId 변경 시 중복 검사
+        if (newEmployee.getEmployeeId() != null) {
+
+            EmployeeDto existingEmployee = employeeMapper.findByEmployeeId(newEmployee.getEmployeeId());
+
+            // 업데이트할 자리에 데이터가 있고,
+            // existing 10번이 이미 존재한 경우
+            // new 5번이 10번 바꾸려고할 때 오류
+            if (existingEmployee != null && !existingEmployee.getId().equals(newId)) {
                 throw new IllegalArgumentException("employeeId already exists.");
             }
         }
-        int updated = employeeMapper.update(employee);
+
+        int updated = employeeMapper.update(newEmployee);
+
         if (updated == 0) {
             return null;
         }
-        return employeeMapper.findById(id);
+
+        return employeeMapper.findById(newId);
     }
+
 
     @Override
     public void deleteEmployee(Long id) {
         employeeMapper.delete(id);
     }
+
 }

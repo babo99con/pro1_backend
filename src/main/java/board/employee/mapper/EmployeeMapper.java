@@ -13,6 +13,7 @@ public interface EmployeeMapper {
     List<EmployeeDto> findAll();
 
     List<EmployeeDto> findAllByCondition(@Param("condition") String condition, @Param("value") String value);
+//    Mybatis가 자동으로 map으로 묶어서 전달함.
 
     EmployeeDto findById(@Param("id") Long id);
 
