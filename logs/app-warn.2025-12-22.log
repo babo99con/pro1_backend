@@ -1,0 +1,7 @@
+2025-12-22 10:04:07,007 WARN  [http-nio-3001-exec-4] board.employee.service.EmployeeJpaServiceImpl - 직원 정보 수정 실패 - employeeId 중복=EMP-002
+2025-12-22 10:04:48,267 WARN  [http-nio-3001-exec-3] board.employee.service.EmployeeJpaServiceImpl - 직원 정보 수정 실패 - employeeId 중복=EMP-002
+2025-12-22 16:45:27,055 WARN  [http-nio-3001-exec-3] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=333
+2025-12-22 16:45:27,412 WARN  [http-nio-3001-exec-4] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=333
+2025-12-22 17:02:00,688 WARN  [http-nio-3001-exec-10] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=333
+2025-12-22 17:02:46,219 WARN  [http-nio-3001-exec-1] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=333
+2025-12-22 19:56:38,005 WARN  [http-nio-3001-exec-10] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=333

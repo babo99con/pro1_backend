@@ -13,7 +13,7 @@ import board.board.dto.BoardDto;
 import board.board.service.BoardService;
 
 @Controller
-@CrossOrigin(origins = "*") // ★ CORS 허용 추가
+@CrossOrigin(origins = "*") // ??CORS ?堨毄 於旉?
 public class BoardController {
 
     @Autowired

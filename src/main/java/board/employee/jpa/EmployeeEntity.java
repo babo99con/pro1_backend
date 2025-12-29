@@ -2,14 +2,7 @@ package board.employee.jpa;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +23,7 @@ public class EmployeeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(name = "employee_id", nullable = false, unique = true)
     private String employeeId;
 
@@ -48,12 +42,14 @@ public class EmployeeEntity {
     private String address1;
     private String address2;
 
+    private char deleted_yn = 'Y';
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 
     @PrePersist
+    // insert 하기전에 
     public void onCreate() {
         LocalDateTime now = LocalDateTime.now();
         createdAt = now;
@@ -61,7 +57,33 @@ public class EmployeeEntity {
     }
 
     @PreUpdate
+    // update 하기전에 
     public void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    public void update(EmployeeEntity newEmployee) {
+        this.employeeId = newEmployee.getEmployeeId();
+        this.name = newEmployee.getName();
+        this.emailLocal = newEmployee.getEmailLocal();
+        this.emailDomain = newEmployee.getEmailDomain();
+        this.department = newEmployee.getDepartment();
+        this.gender = newEmployee.getGender();
+        this.birthDate = newEmployee.getBirthDate();
+        this.phonePrefix = newEmployee.getPhonePrefix();
+        this.phoneMiddle = newEmployee.getPhoneMiddle();
+        this.phoneLast = newEmployee.getPhoneLast();
+        this.zipCode = newEmployee.getZipCode();
+        this.address1 = newEmployee.getAddress1();
+        this.address2 = newEmployee.getAddress2();
+        }
+
+        // 현직인지 검사
+        public boolean isActive()
+        {
+            if(this.getDeleted_yn() == 'Y')
+                return true;
+            return false;
+        }
+
 }

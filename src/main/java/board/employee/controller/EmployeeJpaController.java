@@ -1,104 +1,125 @@
 package board.employee.controller;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
+import board.employee.common.ApiResponse;
+import board.employee.dto.EmployeeDto;
+import board.employee.jpa.EmployeeEntity;
+import board.employee.mapper.DTOMapper;
+import board.employee.mapper.EmployeeMapper;
+import board.employee.service.EmployeeJpaService;
+import board.employee.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import board.employee.service.EmployeeJpaService;
-import board.employee.jpa.EmployeeEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/jpa/employees")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
+@Slf4j
 @Tag(name = "Employees (JPA)", description = "Employee CRUD API powered by Spring Data JPA")
 public class EmployeeJpaController {
 
     private final EmployeeJpaService employeeJpaService;
+    private final EmployeeService employeeService;
 
-    @Operation(summary = "List all employees (JPA)")
-    @GetMapping
-    public ResponseEntity<List<EmployeeEntity>> list() {
+    @Operation(summary = "List all employees")
+    @GetMapping(produces = "application/json; charset=UTF-8")
+    public ResponseEntity<ApiResponse<List<EmployeeDto>>>openEmployeesList() {
+
+        log.info("직원 전체 목록 조회 요청(GET /api/jpa/employees)");
+
         List<EmployeeEntity> list = employeeJpaService.getEmployees();
-        
-        if (list == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        return ResponseEntity.ok(list);
+
+        // 한번 예제로 ApiResponse에 fail로 처리.
+        return ResponseEntity.ok(
+                ApiResponse.success("전체 직원 조회 성공", DTOMapper.toDtoList(list))
+        );
     }
 
-    @Operation(summary = "Get a single employee by id (JPA)")
-    @GetMapping("/{id}")
-    public ResponseEntity<EmployeeEntity> get(@PathVariable Long id) {
-        EmployeeEntity employee = employeeJpaService.getEmployee(id);
-        
-        if (employee == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        return ResponseEntity.ok(employee);
-    }
 
-    @Operation(summary = "Search employees by condition and value (JPA)")
+    @Operation(summary = "Search employees by condition and value")
     @GetMapping("/search")
-    public ResponseEntity<List<EmployeeEntity>> searchByCondition(@RequestParam("condition") String condition,
-                                                                  @RequestParam(value = "value") String value) {
-        List<EmployeeEntity> list = employeeJpaService.getEmployeesByCondition(condition, value);
-        
-        if (list == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        return ResponseEntity.ok(list);
+    public ResponseEntity<ApiResponse<List<EmployeeDto>>> searchByCondition(@RequestParam("condition") String condition,
+                                                                            @RequestParam("value") String value) {
+
+        log.info("직원 조건 검색 요청 - condition={}, value={}", condition, value);
+
+        // mybatis가 자동으로 map객체로 집어넣는다.
+        List<EmployeeDto> list = employeeService.getEmployeesByCondition(condition, value);
+
+        if(list ==null)
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(
+                            new ApiResponse<>(false, "조건 조회 실패", list)
+                    );
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, "검색 조회 성공", list)
+        );
     }
 
-    @Operation(summary = "Create a new employee (JPA)")
+    @Operation(summary = "Get employee by id")
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<EmployeeDto>> openEmployeeDetail(@PathVariable Long id) {
+
+        log.info("[GET] /api/jpa/employees/{}", id);
+
+        EmployeeEntity employee = employeeJpaService.getEmployee(id);
+
+        return ResponseEntity.ok(
+                ApiResponse.success("단일 직원 조회 성공", DTOMapper.toDto(employee))
+        );
+    }
+
+    @Operation(summary = "Create employee")
     @PostMapping
-    public ResponseEntity<EmployeeEntity> create(@RequestBody EmployeeEntity newEmployee) {
+    public ResponseEntity<ApiResponse<URI>> createEmployee(@RequestBody EmployeeEntity newEmployee) {
+
+        log.info("[POST] /api/jpa/employees");
+
         EmployeeEntity created = employeeJpaService.createEmployee(newEmployee);
-//        URI location = URI.create("/api/jpa/employees/" + created.getId());
-//        return ResponseEntity.created(location).body(created);
-        
-        return ResponseEntity.ok(created);
+        URI location = URI.create("/api/jpa/employees/" + created.getId());
+
+        return ResponseEntity
+                .created(location)
+                .body(ApiResponse.success("신규 직원 생성 성공", location));
     }
 
-    @Operation(summary = "Update an existing employee (JPA)")
+    @Operation(summary = "Update employee")
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeEntity> update(@PathVariable Long id, @RequestBody EmployeeEntity newEmployee) {
-        EmployeeEntity updated = employeeJpaService.updateEmployee(id, newEmployee);
-        
-        if (updated == null) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ApiResponse<EmployeeDto>> updateEmployee(
+            @PathVariable Long id,
+            @RequestBody EmployeeEntity newEmployee) {
 
-        return ResponseEntity.ok(updated);
+        log.info("[PUT] /api/jpa/employees/{}", id);
+
+        EmployeeEntity updated =
+                employeeJpaService.updateEmployee(id, newEmployee);
+
+        return ResponseEntity.ok(
+                ApiResponse.success("직원 수정 성공", DTOMapper.toDto(updated))
+        );
     }
 
-    @Operation(summary = "Delete an employee (JPA)")
+    @Operation(summary = "Delete employee")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteEmployee(@PathVariable Long id) {
+
+        log.info("[DELETE] /api/jpa/employees/{}", id);
+
         employeeJpaService.deleteEmployee(id);
 
-        return ResponseEntity.noContent().build();
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        return ResponseEntity.ok(
+                ApiResponse.success("직원 삭제 성공", null)
+        );
     }
 }

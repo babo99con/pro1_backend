@@ -1,0 +1,29 @@
+2025-12-19 10:37:30,780 WARN  [http-nio-3001-exec-4] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=20
+2025-12-19 10:37:46,164 WARN  [http-nio-3001-exec-2] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=6
+2025-12-19 10:37:48,251 WARN  [http-nio-3001-exec-4] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=18
+2025-12-19 10:37:51,287 WARN  [http-nio-3001-exec-5] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=20
+2025-12-19 10:39:25,497 WARN  [Thread-5] org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [logback-2] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+ java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:519)
+ java.base/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3778)
+ java.base/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3723)
+ java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1712)
+ java.base/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+ java.base/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+ java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+ java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+ java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-19 10:39:37,248 WARN  [http-nio-3001-exec-1] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=11
+2025-12-19 10:44:29,655 WARN  [http-nio-3001-exec-8] board.employee.service.EmployeeJpaServiceImpl - 신규 직원 생성 실패 - employeeId가 비어 있음
+2025-12-19 10:44:56,207 WARN  [http-nio-3001-exec-10] board.employee.service.EmployeeJpaServiceImpl - 신규 직원 생성 실패 - employeeId가 비어 있음
+2025-12-19 10:45:08,201 WARN  [http-nio-3001-exec-1] board.employee.service.EmployeeJpaServiceImpl - 신규 직원 생성 실패 - employeeId 중복=EMP-001
+2025-12-19 11:05:56,343 WARN  [http-nio-3001-exec-4] board.employee.service.EmployeeJpaServiceImpl - 신규 직원 생성 실패 - employeeId가 비어 있음
+2025-12-19 11:06:57,448 WARN  [http-nio-3001-exec-6] board.employee.service.EmployeeJpaServiceImpl - 신규 직원 생성 실패 - employeeId 중복=EMP-001
+2025-12-19 11:12:42,951 WARN  [http-nio-3001-exec-3] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=11
+2025-12-19 11:31:09,297 WARN  [http-nio-3001-exec-7] board.employee.service.EmployeeJpaServiceImpl - 직원 정보 수정 실패 - employeeId 중복=EMP-001
+2025-12-19 11:31:20,807 WARN  [http-nio-3001-exec-8] board.employee.service.EmployeeJpaServiceImpl - 직원 정보 수정 실패 - employeeId 중복=EMP-001
+2025-12-19 11:31:36,022 WARN  [http-nio-3001-exec-10] board.employee.service.EmployeeJpaServiceImpl - 직원 정보 수정 실패 - employeeId 중복=EMP-001
+2025-12-19 12:05:21,862 WARN  [http-nio-3001-exec-7] board.employee.service.EmployeeJpaServiceImpl - 직원 정보 수정 실패 - employeeId 중복=EMP-002
+2025-12-19 12:07:36,710 WARN  [http-nio-3001-exec-6] board.employee.service.EmployeeJpaServiceImpl - 직원 정보 수정 실패 - employeeId 중복=EMP-002

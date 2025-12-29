@@ -3,8 +3,11 @@ package board.employee.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import board.employee.jpa.EmployeeEntity;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class EmployeeDto {
 
@@ -38,4 +41,5 @@ public class EmployeeDto {
         }
         return phonePrefix + "-" + phoneMiddle + "-" + phoneLast;
     }
+
 }

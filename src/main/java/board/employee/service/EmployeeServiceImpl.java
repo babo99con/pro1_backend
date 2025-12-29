@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import board.employee.dto.EmployeeDto;
 import board.employee.mapper.EmployeeMapper;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -85,6 +87,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteEmployee(Long id) {
         employeeMapper.delete(id);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
 }

@@ -1,0 +1,188 @@
+2025-12-18 09:21:04,530 ERROR [restartedMain] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 3001 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 3001 or configure this application to listen on another port.
+
+2025-12-18 10:10:06,894 ERROR [restartedMain] org.springframework.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerAdapter' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]: Factory method 'requestMappingHandlerAdapter' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageConverters' defined in class path resource [org/springframework/boot/autoconfigure/http/HttpMessageConvertersAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.http.HttpMessageConverters]: Factory method 'messageConverters' threw exception; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mappingJackson2HttpMessageConverter' defined in class path resource [org/springframework/boot/autoconfigure/http/JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration.class]: Unsatisfied dependency expressed through method 'mappingJackson2HttpMessageConverter' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jacksonObjectMapper' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class]: Unsatisfied dependency expressed through method 'jacksonObjectMapper' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jacksonObjectMapperBuilder' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:633)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:929)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:591)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:409)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+	at board.BoardApplication.main(BoardApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]: Factory method 'requestMappingHandlerAdapter' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageConverters' defined in class path resource [org/springframework/boot/autoconfigure/http/HttpMessageConvertersAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.http.HttpMessageConverters]: Factory method 'messageConverters' threw exception; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mappingJackson2HttpMessageConverter' defined in class path resource [org/springframework/boot/autoconfigure/http/JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration.class]: Unsatisfied dependency expressed through method 'mappingJackson2HttpMessageConverter' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jacksonObjectMapper' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class]: Unsatisfied dependency expressed through method 'jacksonObjectMapper' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jacksonObjectMapperBuilder' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648)
+	... 22 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageConverters' defined in class path resource [org/springframework/boot/autoconfigure/http/HttpMessageConvertersAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.http.HttpMessageConverters]: Factory method 'messageConverters' threw exception; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mappingJackson2HttpMessageConverter' defined in class path resource [org/springframework/boot/autoconfigure/http/JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration.class]: Unsatisfied dependency expressed through method 'mappingJackson2HttpMessageConverter' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jacksonObjectMapper' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class]: Unsatisfied dependency expressed through method 'jacksonObjectMapper' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jacksonObjectMapperBuilder' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:633)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.getIfAvailable(DefaultListableBeanFactory.java:2032)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.ifAvailable(DefaultListableBeanFactory.java:2043)
+	at org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.configureMessageConverters(WebMvcAutoConfiguration.java:231)
+	at org.springframework.web.servlet.config.annotation.WebMvcConfigurerComposite.configureMessageConverters(WebMvcConfigurerComposite.java:137)
+	at org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration.configureMessageConverters(DelegatingWebMvcConfiguration.java:118)
+	at org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport.getMessageConverters(WebMvcConfigurationSupport.java:865)
+	at org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport.requestMappingHandlerAdapter(WebMvcConfigurationSupport.java:673)
+	at org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration.requestMappingHandlerAdapter(WebMvcAutoConfiguration.java:420)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 23 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.http.HttpMessageConverters]: Factory method 'messageConverters' threw exception; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mappingJackson2HttpMessageConverter' defined in class path resource [org/springframework/boot/autoconfigure/http/JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration.class]: Unsatisfied dependency expressed through method 'mappingJackson2HttpMessageConverter' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jacksonObjectMapper' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class]: Unsatisfied dependency expressed through method 'jacksonObjectMapper' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jacksonObjectMapperBuilder' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648)
+	... 45 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mappingJackson2HttpMessageConverter' defined in class path resource [org/springframework/boot/autoconfigure/http/JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration.class]: Unsatisfied dependency expressed through method 'mappingJackson2HttpMessageConverter' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jacksonObjectMapper' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class]: Unsatisfied dependency expressed through method 'jacksonObjectMapper' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jacksonObjectMapperBuilder' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:536)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.addCandidateEntry(DefaultListableBeanFactory.java:1616)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1573)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveMultipleBeans(DefaultListableBeanFactory.java:1417)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1349)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.resolveStream(DefaultListableBeanFactory.java:2119)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.orderedStream(DefaultListableBeanFactory.java:2113)
+	at org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration.messageConverters(HttpMessageConvertersAutoConfiguration.java:70)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 46 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jacksonObjectMapper' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class]: Unsatisfied dependency expressed through method 'jacksonObjectMapper' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jacksonObjectMapperBuilder' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:536)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:911)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 66 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jacksonObjectMapperBuilder' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:633)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:353)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:911)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 80 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder]: Factory method 'jacksonObjectMapperBuilder' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648)
+	... 92 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jsonMixinModule' defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:673)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:661)
+	at org.springframework.context.support.AbstractApplicationContext.getBeansOfType(AbstractApplicationContext.java:1314)
+	at org.springframework.beans.factory.BeanFactoryUtils.beansOfTypeIncludingAncestors(BeanFactoryUtils.java:329)
+	at org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration$StandardJackson2ObjectMapperBuilderCustomizer.getBeans(JacksonAutoConfiguration.java:335)
+	at org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration$StandardJackson2ObjectMapperBuilderCustomizer.configureModules(JacksonAutoConfiguration.java:295)
+	at org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration$StandardJackson2ObjectMapperBuilderCustomizer.customize(JacksonAutoConfiguration.java:200)
+	at org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.customize(JacksonAutoConfiguration.java:148)
+	at org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.jacksonObjectMapperBuilder(JacksonAutoConfiguration.java:141)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 93 common frames omitted
+Caused by: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file [C:\dev\04\04\build\classes\java\main\board\employee\controller\EmployeeJpaController.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.scanCandidateComponents(ClassPathScanningCandidateComponentProvider.java:457)
+	at org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.findCandidateComponents(ClassPathScanningCandidateComponentProvider.java:316)
+	at org.springframework.boot.jackson.JsonMixinModule.afterPropertiesSet(JsonMixinModule.java:73)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+	... 111 common frames omitted
+Caused by: java.lang.ArrayIndexOutOfBoundsException: Index 6 out of bounds for length 0
+	at org.springframework.asm.ClassReader.readShort(ClassReader.java:3615)
+	at org.springframework.asm.ClassReader.<init>(ClassReader.java:197)
+	at org.springframework.asm.ClassReader.<init>(ClassReader.java:180)
+	at org.springframework.asm.ClassReader.<init>(ClassReader.java:166)
+	at org.springframework.asm.ClassReader.<init>(ClassReader.java:287)
+	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:57)
+	at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:48)
+	at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103)
+	at org.springframework.core.type.classreading.CachingMetadataReaderFactory.getMetadataReader(CachingMetadataReaderFactory.java:123)
+	at org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.scanCandidateComponents(ClassPathScanningCandidateComponentProvider.java:429)
+	... 115 common frames omitted
+2025-12-18 10:20:07,306 ERROR [restartedMain] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in board.employee.controller.EmployeeJpaController required a bean of type 'board.employee.service.EmployeeJpaService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'board.employee.service.EmployeeJpaService' in your configuration.
+
+2025-12-18 19:04:35,947 WARN  [http-nio-3001-exec-6] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=20
+2025-12-18 19:04:37,707 WARN  [http-nio-3001-exec-7] board.employee.service.EmployeeJpaServiceImpl - 직원 단건 조회 실패 - 존재하지 않는 id=18
