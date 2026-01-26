@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="app.patient.mapper.PatientMapper">
+
+    <!-- ==================================================
+         공통 컬럼 (DTO 기준)
+         ================================================== -->
+    <sql id="patientColumns">
+        id,
+        patient_id,
+        name,
+        rrn_masked,
+        gender,
+        birth_date,
+        phone,
+        address
+    </sql>
+
+    <!-- ==================================================
+         ResultMap (PatientDto 전용)
+         ================================================== -->
+    <resultMap id="PatientResultMap"
+               type="app.patient.jpa.PatientEntity">
+
+        <id     property="id"         column="id"/>
+        <result property="patientId"  column="patient_id"/>
+        <result property="name"       column="name"/>
+        <result property="rrnMasked"  column="rrn_masked"/>
+        <result property="gender"     column="gender"/>
+        <result property="birthDate"  column="birth_date"/>
+        <result property="phone"      column="phone"/>
+        <result property="address"    column="address"/>
+    </resultMap>
+
+    <!-- ==================================================
+         전체 조회
+         ================================================== -->
+    <select id="findAll"
+            resultMap="PatientResultMap">
+
+        SELECT
+        <include refid="patientColumns"/>
+        FROM patient
+        ORDER BY id DESC
+    </select>
+
+    <!-- ==================================================
+             조건부 기반 단건 조회(이름)
+             ================================================== -->
+    <select id="findAllByCondition"
+            parameterType="map"
+            resultType="app.patient.dto.PatientDto">
+
+        SELECT
+        id,
+        patient_id,
+        name,
+        rrn_masked,
+        gender,
+        birth_date,
+        phone,
+        address
+        FROM patient
+        <where>
+            <choose>
+                <when test="condition == 'name'">
+                    name LIKE CONCAT('%', #{value}, '%')
+                </when>
+                <otherwise>
+                    1 = 0
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY id DESC
+    </select>
+    <!-- ==================================================
+         ID 기반 단건 조회
+         ================================================== -->
+    <select id="findById"
+            parameterType="long"
+            resultMap="PatientResultMap">
+
+        SELECT
+        <include refid="patientColumns"/>
+        FROM patient
+        WHERE id = #{id}
+    </select>
+
+    <!-- ==================================================
+         patientId 기반 단건 조회
+         ================================================== -->
+    <select id="findByPatientId"
+            parameterType="string"
+            resultMap="PatientResultMap">
+
+        SELECT
+        <include refid="patientColumns"/>
+        FROM patient
+        WHERE patient_id = #{patientId}
+    </select>
+
+    <!-- ==================================================
+         INSERT
+         ================================================== -->
+    <insert id="insert"
+            parameterType="app.patient.dto.PatientDto"
+            useGeneratedKeys="true"
+            keyProperty="Id">
+
+        INSERT INTO patient (
+            patient_id,
+            name,
+            rrn_masked,
+            gender,
+            birth_date,
+            phone,
+            address
+        ) VALUES (
+                     #{patientId},
+                     #{name},
+                     #{rrnMasked},
+                     #{gender},
+                     #{birthDate},
+                     #{phone},
+                     #{address}
+                 )
+    </insert>
+
+    <!-- ==================================================
+         UPDATE
+         ================================================== -->
+    <update id="update"
+            parameterType="app.patient.dto.PatientDto">
+
+        UPDATE patient
+        SET
+            patient_id = #{patientId},
+            name       = #{name},
+            rrn_masked = #{rrnMasked},
+            gender     = #{gender},
+            birth_date = #{birthDate},
+            phone      = #{phone},
+            address    = #{address}
+        WHERE id = #{Id}
+    </update>
+
+    <!-- ==================================================
+         DELETE (물리 삭제)
+         ================================================== -->
+    <delete id="delete"
+            parameterType="long">
+
+        DELETE FROM patient
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

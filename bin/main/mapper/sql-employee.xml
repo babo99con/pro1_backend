@@ -1,53 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="board.employee.mapper.EmployeeMapper">
 
-    <sql id="selectAllFromEmployee">
-        select * from employee where deleted_yn = 'N'
+    <!-- ==================================================
+         공통 컬럼 정의 (절대 where 포함 X)
+         ================================================== -->
+    <sql id="employeeColumns">
+        id,
+        employee_id,
+        name,
+        email_local,
+        email_domain,
+        department,
+        gender,
+        birth_date,
+        phone_prefix,
+        phone_middle,
+        phone_last,
+        zip_code,
+        address1,
+        address2,
+        created_at,
+        updated_at,
+        profile_image
     </sql>
 
-    <resultMap id="EmployeeResultMap" type="board.employee.dto.EmployeeDto">
-        <id property="id" column="id"/>
-        <result property="employeeId" column="employee_id"/>
-        <result property="name" column="name"/>
-        <result property="emailLocal" column="email_local"/>
-        <result property="emailDomain" column="email_domain"/>
-        <result property="department" column="department"/>
-        <result property="gender" column="gender"/>
-        <result property="birthDate" column="birth_date"/>
-        <result property="phonePrefix" column="phone_prefix"/>
-        <result property="phoneMiddle" column="phone_middle"/>
-        <result property="phoneLast" column="phone_last"/>
-        <result property="zipCode" column="zip_code"/>
-        <result property="address1" column="address1"/>
-        <result property="address2" column="address2"/>
-        <result property="createdAt" column="created_at"/>
-        <result property="updatedAt" column="updated_at"/>
+    <!-- ==================================================
+         ResultMap (DB 컬럼 ↔ DTO 필드 1:1 매핑)
+         ================================================== -->
+    <resultMap id="EmployeeResultMap" type="app.employee.dto.EmployeeDto">
+        <id     property="id"           column="id"/>
+        <result property="employeeId"   column="employee_id"/>
+        <result property="name"         column="name"/>
+        <result property="emailLocal"   column="email_local"/>
+        <result property="emailDomain"  column="email_domain"/>
+        <result property="department"   column="department"/>
+        <result property="gender"       column="gender"/>
+        <result property="birthDate"    column="birth_date"/>
+        <result property="phonePrefix"  column="phone_prefix"/>
+        <result property="phoneMiddle"  column="phone_middle"/>
+        <result property="phoneLast"    column="phone_last"/>
+        <result property="zipCode"      column="zip_code"/>
+        <result property="address1"     column="address1"/>
+        <result property="address2"     column="address2"/>
+        <result property="createdAt"    column="created_at"/>
+        <result property="updatedAt"    column="updated_at"/>
+        <result property="profileImage" column="profile_image"/>
+        <!-- profileImageUrl ❌ (Service에서 세팅) -->
     </resultMap>
 
+    <!-- ==================================================
+         전체 조회
+         ================================================== -->
     <select id="findAll" resultMap="EmployeeResultMap">
-        <include refid="selectAllFromEmployee"/>
-
+        SELECT
+        <include refid="employeeColumns"/>
+        FROM employee
+        WHERE deleted_yn = 'N'
         ORDER BY id DESC
     </select>
 
-    <select id="findAllByCondition" parameterType="Map" resultMap="EmployeeResultMap">
-        <include refid="selectAllFromEmployee"/>
+    <!-- ==================================================
+         조건 조회
+         ================================================== -->
+    <select id="findAllByCondition"
+            parameterType="map"
+            resultMap="EmployeeResultMap">
+
+        SELECT
+        <include refid="employeeColumns"/>
+        FROM employee
+        WHERE deleted_yn = 'N'
 
         <choose>
             <when test="condition == 'name'">
                 AND name LIKE CONCAT('%', #{value}, '%')
             </when>
-
             <when test="condition == 'employeeId'">
                 AND employee_id LIKE CONCAT('%', #{value}, '%')
             </when>
-
             <when test="condition == 'department'">
                 AND department LIKE CONCAT('%', #{value}, '%')
             </when>
-
             <otherwise>
                 AND 1 = 0
             </otherwise>
@@ -56,22 +93,43 @@
         ORDER BY id DESC
     </select>
 
+    <!-- ==================================================
+         ID 기반 단건 조회
+         ================================================== -->
+    <select id="findById"
+            parameterType="long"
+            resultMap="EmployeeResultMap">
 
-    <select id="findById" parameterType="long" resultMap="EmployeeResultMap">
-        <include refid="selectAllFromEmployee"/>
-
-          AND id = #{id}
+        SELECT
+        <include refid="employeeColumns"/>
+        FROM employee
+        WHERE deleted_yn = 'N'
+        AND id = #{id}
     </select>
 
-    <select id="findByEmployeeId" parameterType="string" resultMap="EmployeeResultMap">
-        <include refid="selectAllFromEmployee"/>
+    <!-- ==================================================
+         employeeId 기반 단건 조회
+         ================================================== -->
+    <select id="findByEmployeeId"
+            parameterType="string"
+            resultMap="EmployeeResultMap">
 
-          AND employee_id = #{employeeId}
+        SELECT
+        <include refid="employeeColumns"/>
+        FROM employee
+        WHERE deleted_yn = 'N'
+        AND employee_id = #{employeeId}
     </select>
 
-    <insert id="insert" parameterType="board.employee.dto.EmployeeDto" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO employee
-        (
+    <!-- ==================================================
+         INSERT
+         ================================================== -->
+    <insert id="insert"
+            parameterType="app.employee.dto.EmployeeDto"
+            useGeneratedKeys="true"
+            keyProperty="id">
+
+        INSERT INTO employee (
             employee_id,
             name,
             email_local,
@@ -87,54 +145,62 @@
             address2,
             created_at,
             updated_at,
-            deleted_yn
-        )
-        VALUES
-        (
-            #{employeeId},
-            #{name},
-            #{emailLocal},
-            #{emailDomain},
-            #{department},
-            #{gender},
-            #{birthDate},
-            #{phonePrefix},
-            #{phoneMiddle},
-            #{phoneLast},
-            #{zipCode},
-            #{address1},
-            #{address2},
-            NOW(),
-            NOW(),
-            'N'
-        )
+            deleted_yn,
+            profile_image
+        ) VALUES (
+                     #{employeeId},
+                     #{name},
+                     #{emailLocal},
+                     #{emailDomain},
+                     #{department},
+                     #{gender},
+                     #{birthDate},
+                     #{phonePrefix},
+                     #{phoneMiddle},
+                     #{phoneLast},
+                     #{zipCode},
+                     #{address1},
+                     #{address2},
+                     NOW(),
+                     NOW(),
+                     'Y',
+                     #{profileImage}
+                 )
     </insert>
 
-    <update id="update" parameterType="board.employee.dto.EmployeeDto">
+    <!-- ==================================================
+         UPDATE
+         ================================================== -->
+    <update id="update" parameterType="app.employee.dto.EmployeeDto">
         UPDATE employee
         SET
-            employee_id = #{employeeId},
-            name = #{name},
-            email_local = #{emailLocal},
+            employee_id  = #{employeeId},
+            name         = #{name},
+            email_local  = #{emailLocal},
             email_domain = #{emailDomain},
-            department = #{department},
-            gender = #{gender},
-            birth_date = #{birthDate},
+            department   = #{department},
+            gender       = #{gender},
+            birth_date   = #{birthDate},
             phone_prefix = #{phonePrefix},
             phone_middle = #{phoneMiddle},
-            phone_last = #{phoneLast},
-            zip_code = #{zipCode},
-            address1 = #{address1},
-            address2 = #{address2},
-            updated_at = NOW()
+            phone_last   = #{phoneLast},
+            zip_code     = #{zipCode},
+            address1     = #{address1},
+            address2     = #{address2},
+            updated_at   = NOW()
         WHERE id = #{id}
           AND deleted_yn = 'N'
     </update>
 
+    <!-- ==================================================
+         DELETE (논리 삭제)
+         ================================================== -->
     <update id="delete" parameterType="long">
         UPDATE employee
-        SET deleted_yn = 'Y',
+        SET
+            deleted_yn = 'Y',
             updated_at = NOW()
         WHERE id = #{id}
     </update>
+
 </mapper>

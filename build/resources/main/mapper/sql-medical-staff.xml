@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="app.medicalstaff.mapper.MedicalStaffMapper">
+
+    <sql id="selectColumns">
+        ms.id AS id,
+        ms.staff_id AS staff_id,
+        ms.name AS name,
+        ms.gender AS gender,
+        ms.birth_date AS birth_date,
+        ms.phone AS phone,
+        ms.email AS email,
+        ms.hire_date AS hire_date,
+        ms.department_id AS department_id,
+        d.name AS department_name,
+        ms.position_id AS position_id,
+        p.name AS position_name,
+        ms.profile_image_key AS profile_image_key,
+        ms.status AS status,
+        CASE
+            WHEN doc.medical_staff_id IS NOT NULL THEN 'DOCTOR'
+            WHEN n.medical_staff_id IS NOT NULL THEN 'NURSE'
+            WHEN t.medical_staff_id IS NOT NULL THEN 'TECHNICIAN'
+            ELSE NULL
+        END AS staff_type,
+        COALESCE(doc.license_number, n.license_number) AS license_number,
+        doc.specialty AS specialty,
+        n.grade AS grade,
+        t.certification AS certification,
+        t.field AS field
+    </sql>
+
+    <resultMap id="MedicalStaffResultMap" type="app.medicalstaff.dto.MedicalStaffDto">
+        <id     property="id"              column="id"/>
+        <result property="staffId"         column="staff_id"/>
+        <result property="name"            column="name"/>
+        <result property="gender"          column="gender"/>
+        <result property="birthDate"       column="birth_date"/>
+        <result property="phone"           column="phone"/>
+        <result property="email"           column="email"/>
+        <result property="hireDate"        column="hire_date"/>
+        <result property="departmentId"    column="department_id"/>
+        <result property="departmentName"  column="department_name"/>
+        <result property="positionId"      column="position_id"/>
+        <result property="positionName"    column="position_name"/>
+        <result property="profileImageKey" column="profile_image_key"/>
+        <result property="status"          column="status"/>
+        <result property="staffType"       column="staff_type"/>
+        <result property="licenseNumber"   column="license_number"/>
+        <result property="specialty"       column="specialty"/>
+        <result property="grade"           column="grade"/>
+        <result property="certification"   column="certification"/>
+        <result property="field"           column="field"/>
+    </resultMap>
+
+    <sql id="baseFrom">
+        FROM medical_staff ms
+        LEFT JOIN department d ON ms.department_id = d.id
+        LEFT JOIN `position` p ON ms.position_id = p.id
+        LEFT JOIN doctor doc ON doc.medical_staff_id = ms.id
+        LEFT JOIN nurse n ON n.medical_staff_id = ms.id
+        LEFT JOIN technician t ON t.medical_staff_id = ms.id
+    </sql>
+
+    <select id="findAll" resultMap="MedicalStaffResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        <include refid="baseFrom"/>
+        ORDER BY ms.id DESC
+    </select>
+
+    <select id="findAllByCondition"
+            parameterType="map"
+            resultMap="MedicalStaffResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        <include refid="baseFrom"/>
+        <where>
+            <choose>
+                <when test="condition == 'name'">
+                    ms.name LIKE CONCAT('%', #{value}, '%')
+                </when>
+                <when test="condition == 'department'">
+                    d.name LIKE CONCAT('%', #{value}, '%')
+                </when>
+                <when test="condition == 'position'">
+                    p.name LIKE CONCAT('%', #{value}, '%')
+                </when>
+                <when test="condition == 'staff_type' or condition == 'staffType'">
+                    <choose>
+                        <when test="value == 'DOCTOR'">
+                            doc.medical_staff_id IS NOT NULL
+                        </when>
+                        <when test="value == 'NURSE'">
+                            n.medical_staff_id IS NOT NULL
+                        </when>
+                        <when test="value == 'TECHNICIAN'">
+                            t.medical_staff_id IS NOT NULL
+                        </when>
+                        <otherwise>1 = 0</otherwise>
+                    </choose>
+                </when>
+                <otherwise>
+                    1 = 0
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY ms.id DESC
+    </select>
+
+    <select id="findById"
+            parameterType="long"
+            resultMap="MedicalStaffResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        <include refid="baseFrom"/>
+        WHERE ms.id = #{id}
+    </select>
+
+    <select id="findByStaffId"
+            parameterType="string"
+            resultMap="MedicalStaffResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        <include refid="baseFrom"/>
+        WHERE ms.staff_id = #{staffId}
+    </select>
+
+    <insert id="insert"
+            parameterType="app.medicalstaff.dto.MedicalStaffDto"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO medical_staff (
+            staff_id,
+            name,
+            gender,
+            birth_date,
+            phone,
+            email,
+            hire_date,
+            department_id,
+            position_id,
+            profile_image_key,
+            status
+        ) VALUES (
+            #{staffId},
+            #{name},
+            #{gender},
+            #{birthDate},
+            #{phone},
+            #{email},
+            #{hireDate},
+            #{departmentId},
+            #{positionId},
+            #{profileImageKey},
+            #{status}
+        )
+    </insert>
+
+    <update id="update" parameterType="app.medicalstaff.dto.MedicalStaffDto">
+        UPDATE medical_staff
+        SET
+            staff_id = #{staffId},
+            name = #{name},
+            gender = #{gender},
+            birth_date = #{birthDate},
+            phone = #{phone},
+            email = #{email},
+            hire_date = #{hireDate},
+            department_id = #{departmentId},
+            position_id = #{positionId},
+            profile_image_key = #{profileImageKey},
+            status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM medical_staff
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
